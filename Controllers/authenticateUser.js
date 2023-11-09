@@ -1,11 +1,11 @@
-const User = require('../Models/User');
+const Users = require('../Models/User');
 const bcrypt = require('bcrypt');
 
   const verifyEmailAndToken = async (req, res) => {
     const { email, token } = req.body; // Extract email and token from the body
 
     try {
-      const user = await User.findOne({ email }).exec();
+      const user = await Users.findOne({ email }).exec();
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }

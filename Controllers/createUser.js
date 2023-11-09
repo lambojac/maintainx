@@ -1,4 +1,4 @@
-const User = require('../Models/User');
+const Users = require('../models/Users');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const sendEmail = require('./sendMail');
@@ -15,23 +15,17 @@ function generateSixDigitNumber() {
 
 const createUser = asyncHandler(async (req, res) => {
   try {
-    const { firstName, lastName, email, loginPassword } = req.body;
+    const { email } = req.body;
 
-    if (!email || !firstName || !lastName || !loginPassword) {
-      return res.status(400).json({ message: "All fields are required" });
+    if (!email ) {
+      return res.status(400).json({ message: "Email is required" });
     }
 
-    const existingUser = await User.findOne({ email }).exec();
+    const existingUser = await Users.findOne({ email }).exec();
 
     if (existingUser) {
       return res.status(409).json({ message: "User has already been registered" });
     }
-
-    if (loginPassword.length < 6) {
-      return res.status(403).json({ message: "Password must not be less than 6 characters" });
-    }
-
-    const hashedPassword = await bcrypt.hash(loginPassword, 10);
 
     // Generate a 6-digit authentication code
     const token = generateSixDigitNumber().toString();
@@ -41,12 +35,9 @@ const createUser = asyncHandler(async (req, res) => {
     const expirationDate = new Date();
     expirationDate.setHours(expirationDate.getHours() + 24);
 
-    const newUser = await User.create({
-      firstName,
-      lastName,
+    const newUser = await Users.create({
       email,
       authToken: { token: hashedToken, expiry: expirationDate },
-      loginPassword: hashedPassword,
     });
 
     await newUser.save();
