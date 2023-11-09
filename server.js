@@ -5,8 +5,8 @@ const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
 const { connectDB } = require('./config/dbConfig.js')
 const cookieParser = require('cookie-parser')
-const { createUser } = require('./Controllers/createUser.js')
-const {verifyEmailAndToken}  = require('./Controllers/authenticateUser.js');
+const userRoute  = require('./Routes/usersRoute.js')
+const verifyEmailAndToken  = require('./Controllers/authenticateUser.js')
 
 
 
@@ -28,8 +28,8 @@ app.use(bodyParser.json());
 // app.use("/api/users", userRouter);
 // app.use("/api/products", productRouter);
 // app.use("/api/contactus", contactRoute);
-app.use("/api/users", createUser);
-app.use("/api/auth", verifyEmailAndToken)
+   app.use("/api/users", userRoute);
+   app.use("/api/auth", verifyEmailAndToken)
 
 
 //route

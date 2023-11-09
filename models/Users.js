@@ -4,7 +4,7 @@ const UserSchema = mongoose.Schema({
     teams: {
         teamName: {
             type: String,
-            unique: true
+            default: "DefaultTeamName"
         },
         teamDesc: {
             type: String,
@@ -13,11 +13,27 @@ const UserSchema = mongoose.Schema({
     },
     fullName: {
         type: String,
-        required: true
+    },
+    email: {
+        type: String,
+        required: [true, "Please insert a mail"],
+        unique: true,
+        trim: true,
+        match: [
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            "Please enter a valid email",
+        ],
+    },
+    authToken: {
+        token: String,
+        expiry: Date,
+    },
+    isActive: {
+        type: Boolean,
+        default: false,
     },
     isAdmin: {
         type: String,
-        required: true
     },
     lastVisit: {
         type: Date
