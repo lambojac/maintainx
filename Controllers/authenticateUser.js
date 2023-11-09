@@ -39,4 +39,4 @@ const bcrypt = require('bcrypt');
     }
   }
 
-  module.exports = verifyEmailAndToken;
+  module.exports = {verifyEmailAndToken}
