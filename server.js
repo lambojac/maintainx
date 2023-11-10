@@ -7,6 +7,7 @@ const { connectDB } = require('./config/dbConfig.js')
 const cookieParser = require('cookie-parser')
 const userRoute = require('./Routes/usersRoute.js')
 const {verifyEmailAndToken}  = require('./Controllers/authenticateUser.js')
+const teamRoute = require('./Routes/teamRoute.js')
 
 const app = express();
 dotenv.config();
@@ -26,7 +27,8 @@ app.use(bodyParser.json());
 // app.use("/api/users", userRouter);
 // app.use("/api/products", productRouter);
 // app.use("/api/contactus", contactRoute);
-   app.use("/api/users", userRoute);
+   app.use("/api/users", userRoute)
+   app.use("/api/teams", teamRoute)
    app.use("/api/auth", verifyEmailAndToken)
 
 

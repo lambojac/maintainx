@@ -2,15 +2,9 @@ const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
     teams: {
-        teamName: {
-            type: String,
-            default: "DefaultTeamName"
-        },
-        teamDesc: {
-            type: String,
-            default: ""
-        },
-    },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Teams',
+    },   
     fullName: {
         type: String,
     },
