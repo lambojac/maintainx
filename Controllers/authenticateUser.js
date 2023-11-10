@@ -2,7 +2,7 @@ const Users = require('../models/Users');
 const bcrypt = require('bcrypt');
 const asyncHandler = require('express-async-handler');
 
-<<<<<<< HEAD
+
   const verifyEmailAndToken = async (req, res) => {
     const { email, token } = req.body; // Extract email and token from the body
     try {
@@ -37,14 +37,14 @@ const asyncHandler = require('express-async-handler');
     } catch (error) {
       console.error('Error during email and token verification:', error);
       res.status(500).json({ message: 'Verification failed' });
-=======
+
 const verifyEmailAndToken = asyncHandler(async (req, res) => {
   try {
     const { email, token } = req.body;
 
     if (!email || !token) {
       return res.status(400).json({ message: "Email and token are required" });
->>>>>>> 59fbec57f683cf579bb5f0acdd177eaec06b9234
+
     }
 
     const user = await Users.findOne({ email }).exec();
