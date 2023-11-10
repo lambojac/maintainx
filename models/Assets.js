@@ -1,5 +1,10 @@
 const mongoose=require("mongoose")
 const assetSchema=mongoose.Schema({
+
+category:{
+        type:mongoose.Types.ObjectId,
+        ref:"Category"
+    },
 name:{
     type:String,
 },

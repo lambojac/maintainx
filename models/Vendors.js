@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 const vendorSchema = new mongoose.Schema({
 
     location: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Location'
+        type: String
+        //ref: 'Location'
     },
     assets: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Assets'
+        type:String,
+       // ref: 'Assets'
     },
     name: {
         type: String,
