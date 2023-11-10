@@ -22,8 +22,10 @@ const locationSchema = new mongoose.Schema({
     required: true
   },
   teamInCharge: {
-    type: String,
-    required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Teams',
+    required: true,
+    unique: true,
   },
   files: {
     type: String,

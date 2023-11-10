@@ -10,6 +10,9 @@ const {verifyEmailAndToken}  = require('./Controllers/authenticateUser.js')
 const vendor=require("./routes/vendor")
 const {errorHandler}=require("./middleware/errorHandler")
 const location=require("./routes/location.js")
+const teamRoute = require("./Routes/teamRoute.js")
+
+
 const app = express();
 dotenv.config();
 const PORT = process.env.PORT;
@@ -29,6 +32,7 @@ app.use(bodyParser.json());
 // app.use("/api/products", productRouter);
 // app.use("/api/contactus", contactRoute);
    app.use("/api/users", userRoute);
+   app.use("/api/teams", teamRoute);
    app.use("/api/auth", verifyEmailAndToken)
    app.use("/api/vendor",vendor)
    app.use("/api/location",location)
