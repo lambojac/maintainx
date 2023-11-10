@@ -5,15 +5,8 @@ const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
 const { connectDB } = require('./config/dbConfig.js')
 const cookieParser = require('cookie-parser')
-<<<<<<< HEAD
 const userRoute = require('./Routes/usersRoute.js')
 const {verifyEmailAndToken}  = require('./Controllers/authenticateUser.js')
-=======
-const userRoute  = require('./Routes/usersRoute.js')
-const {verifyEmailAndToken}  = require('./Controllers/authenticateUser.js')
-
-
->>>>>>> 59fbec57f683cf579bb5f0acdd177eaec06b9234
 
 const app = express();
 dotenv.config();
