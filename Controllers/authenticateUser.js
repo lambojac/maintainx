@@ -65,7 +65,7 @@ const verifyEmailAndToken = asyncHandler(async (req, res) => {
       return res.status(403).json({ message: "Token has expired" });
     }
 
-    // Mark the user as verified (update the isActive status)
+    // Mark the user as verified (update the isActive statuses)
     user.isActive = true;
     await user.save();
 
