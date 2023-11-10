@@ -7,8 +7,9 @@ const { connectDB } = require('./config/dbConfig.js')
 const cookieParser = require('cookie-parser')
 const userRoute = require('./Routes/usersRoute.js')
 const {verifyEmailAndToken}  = require('./Controllers/authenticateUser.js')
-const teamRoute = require('./Routes/teamRoute.js')
-
+const vendor=require("./routes/vendor")
+const {errorHandler}=require("./middleware/errorHandler")
+const location=require("./routes/location.js")
 const app = express();
 dotenv.config();
 const PORT = process.env.PORT;
@@ -27,10 +28,10 @@ app.use(bodyParser.json());
 // app.use("/api/users", userRouter);
 // app.use("/api/products", productRouter);
 // app.use("/api/contactus", contactRoute);
-   app.use("/api/users", userRoute)
-   app.use("/api/teams", teamRoute)
+   app.use("/api/users", userRoute);
    app.use("/api/auth", verifyEmailAndToken)
-
+   app.use("/api/vendor",vendor)
+   app.use("/api/location",location)
 
 //route
 app.get("/", (req, res) => {
@@ -41,6 +42,7 @@ app.get("/", (req, res) => {
 //app.use(errorHandler);
 
 //start server
+app.use(errorHandler)
 mongoose.connection.once('open', () => {
     console.log('DB connected');
 
