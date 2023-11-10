@@ -1,87 +1,57 @@
-const Vendors = require('../models/Vendors');
-// Get all vendors
-const getAllVendors = async (req, res) => {
-  try {
-    const vendors = await Vendors.find();
-    res.json(vendors);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+const asyncHandler = require('express-async-handler');
+const Asset = require('../models/Asset');
+
+// Create a new asset
+const createAsset = asyncHandler(async (req, res) => {
+  const asset = new Asset(req.body);
+  const savedAsset = await asset.save();
+  res.json(savedAsset);
+});
+
+// Get all assets
+const getAllAssets = asyncHandler(async (req, res) => {
+  const assets = await Asset.find();
+  res.json(assets);
+});
+
+// Get a specific asset by ID
+const getAssetById = asyncHandler(async (req, res) => {
+  const asset = await Asset.findById(req.params.id);
+  if (!asset) {
+    res.status(404).json({ error: 'Asset not found' });
+  } else {
+    res.json(asset);
   }
-};
+});
 
-// Get a specific vendor by ID
-const getVendorById = async (req, res) => {
-  try {
-    const vendor = await Vendors.findById(req.params.id);
-    if (vendor) {
-      res.json(vendor);
-    } else {
-      res.status(404).json({ message: 'Vendor not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+// Update an asset by ID
+const updateAssetById = asyncHandler(async (req, res) => {
+  const asset = await Asset.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true, runValidators: true }
+  );
+  if (!asset) {
+    res.status(404).json({ error: 'Asset not found' });
+  } else {
+    res.json(asset);
   }
-};
+});
 
-// Create a new vendor
-const createVendor = async (req, res) => {
-  const vendor = new Vendors({
-    location: req.body.location,
-    assets: req.body.assets,
-    name: req.body.name,
-    photo: req.body.photo,
-    description: req.body.description,
-  });
-
-  try {
-    const newVendor = await vendor.save();
-    res.status(201).json(newVendor);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+// Delete an asset by ID
+const deleteAssetById = asyncHandler(async (req, res) => {
+  const asset = await Asset.findByIdAndDelete(req.params.id);
+  if (!asset) {
+    res.status(404).json({ error: 'Asset not found' });
+  } else {
+    res.json({ message: 'Asset deleted successfully' });
   }
-};
-
-// Update a vendor by ID
-const updateVendor = async (req, res) => {
-  try {
-    const vendor = await Vendors.findById(req.params.id);
-
-    if (vendor) {
-      vendor.location = req.body.location;
-      vendor.assets = req.body.assets;
-      vendor.name = req.body.name;
-      vendor.photo = req.body.photo;
-      vendor.description = req.body.description;
-
-      const updatedVendor = await vendor.save();
-      res.json(updatedVendor);
-    } else {
-      res.status(404).json({ message: 'Vendor not found' });
-    }
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// Delete a vendor by ID
-const deleteVendor = async (req, res) => {
-  try {
-    const vendor = await Vendors.findById(req.params.id);
-    if (vendor) {
-      await vendor.remove();
-      res.json({ message: 'Vendor deleted' });
-    } else {
-      res.status(404).json({ message: 'Vendor not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+});
 
 module.exports = {
-  getAllVendors,
-  getVendorById,
-  createVendor,
-  updateVendor,
-  deleteVendor,
+  createAsset,
+  getAllAssets,
+  getAssetById,
+  updateAssetById,
+  deleteAssetById,
 };
