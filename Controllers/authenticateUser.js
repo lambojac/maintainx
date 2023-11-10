@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 
   const verifyEmailAndToken = async (req, res) => {
     const { email, token } = req.body; // Extract email and token from the body
-
     try {
       const user = await Users.findOne({ email }).exec();
       if (!user) {
