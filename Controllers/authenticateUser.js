@@ -5,7 +5,7 @@ const asyncHandler = require('express-async-handler');
 const verifyEmailAndToken = asyncHandler(async (req, res) => {
   try {
     const { email, token } = req.body;
-
+//isAdmin to be added
     if (!email || !token) {
       return res.status(400).json({ message: "Email and token are required" });
     }
@@ -31,6 +31,7 @@ const verifyEmailAndToken = asyncHandler(async (req, res) => {
     // Mark the user as verified (update the isActive status)
     user.isActive = true;
     await user.save();
+    
 
     res.status(200).json({ message: "User has been authenticated successfully" });
   } catch (error) {
